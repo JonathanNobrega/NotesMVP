@@ -28,6 +28,8 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:$SUPPORT_LIBRARY_VERSION"
     implementation "com.android.support:cardview-v7:$SUPPORT_LIBRARY_VERSION"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
     // Test dependencies
     testImplementation 'junit:junit:4.12'

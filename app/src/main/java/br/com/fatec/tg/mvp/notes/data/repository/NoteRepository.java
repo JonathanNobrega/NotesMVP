@@ -14,5 +14,7 @@ public interface NoteRepository {
     @NonNull
     Note getNoteById(@NonNull String id);
 
+    boolean hasAnyNotes();
+
     void saveNote(@NonNull Note note);
 }

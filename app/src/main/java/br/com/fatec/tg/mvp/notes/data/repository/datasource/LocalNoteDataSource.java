@@ -28,6 +28,13 @@ public class LocalNoteDataSource implements NoteRepository {
     }
 
     @Override
+    public boolean hasAnyNotes() {
+        return Realm.getDefaultInstance()
+                .where(Note.class)
+                .count() > 0;
+    }
+
+    @Override
     public void saveNote(@NonNull Note note) {
         try (Realm realm = Realm.getDefaultInstance()) {
             realm.beginTransaction();
