@@ -29,10 +29,12 @@ public class AddEditNoteActivity extends AppCompatActivity implements AddEditNot
 
     private AddEditNoteContract.Presenter presenter;
 
+    @NonNull
     public static Intent getStartIntent(@NonNull Context context) {
         return new Intent(context, AddEditNoteActivity.class);
     }
 
+    @NonNull
     public static Intent getStartIntent(@NonNull Context context,
                                         @Nullable String noteId) {
         Intent intent = new Intent(context, AddEditNoteActivity.class);
@@ -42,7 +44,7 @@ public class AddEditNoteActivity extends AppCompatActivity implements AddEditNot
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_edit_note);
         ButterKnife.bind(this);

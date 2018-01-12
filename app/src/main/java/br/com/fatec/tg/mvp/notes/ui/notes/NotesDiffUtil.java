@@ -9,7 +9,9 @@ import br.com.fatec.tg.mvp.notes.data.entity.Note;
 
 public class NotesDiffUtil extends DiffUtil.Callback {
 
+    @NonNull
     private final List<Note> mOldNoteList;
+    @NonNull
     private final List<Note> mNewNoteList;
 
     NotesDiffUtil(@NonNull List<Note> oldNoteList,

@@ -117,8 +117,8 @@ public class NotesActivity extends AppCompatActivity implements
     }
 
     private void setupRecyclerView() {
-        StaggeredGridLayoutManager layoutManager =
-                new StaggeredGridLayoutManager(columnsNumber, StaggeredGridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(
+                columnsNumber, StaggeredGridLayoutManager.VERTICAL);
         mNoteAdapter = new NotesAdapter(new ArrayList<>(), this);
         recyclerViewNotes.setLayoutManager(layoutManager);
         recyclerViewNotes.setAdapter(mNoteAdapter);
