@@ -1,13 +1,16 @@
 package br.com.fatec.tg.mvp.notes.ui.notes;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import br.com.fatec.tg.mvp.notes.data.entity.Note;
 import br.com.fatec.tg.mvp.notes.data.repository.NoteRepository;
 
 public class NotesPresenter implements NotesContract.Presenter {
 
-    private NoteRepository noteRepository;
+    @NonNull
+    private final NoteRepository noteRepository;
+    @Nullable
     private NotesContract.View view;
 
     NotesPresenter(@NonNull NoteRepository noteRepository) {
@@ -22,23 +25,23 @@ public class NotesPresenter implements NotesContract.Presenter {
 
     @Override
     public void onAddNoteClicked() {
-        view.navigateToAddNoteScreen();
+        getViewOrThrow().navigateToAddNoteScreen();
     }
 
     @Override
     public void onNoteClicked(@NonNull Note note) {
-        view.navigateToNoteDetailsScreen(note);
+        getViewOrThrow().navigateToNoteDetailsScreen(note);
     }
 
     @Override
     public void onNoteCreated(@NonNull Note note) {
-        view.addNoteToList(note);
+        getViewOrThrow().addNoteToList(note);
         updatePlaceholderState();
     }
 
     @Override
     public void onNoteDeleted(@NonNull Note note) {
-        view.removeNoteFromList(note);
+        getViewOrThrow().removeNoteFromList(note);
         updatePlaceholderState();
     }
 
@@ -49,16 +52,25 @@ public class NotesPresenter implements NotesContract.Presenter {
 
     /********** Methods **********/
 
+    @NonNull
+    private NotesContract.View getViewOrThrow() {
+        if (view != null) {
+            return view;
+        } else {
+            throw new IllegalStateException("View not attached to presenter");
+        }
+    }
+
     private void loadNotes() {
-        view.showNotes(noteRepository.getAllNotes());
+        getViewOrThrow().showNotes(noteRepository.getAllNotes());
         updatePlaceholderState();
     }
 
     private void updatePlaceholderState() {
         if (noteRepository.hasAnyNotes()) {
-            view.showMainView();
+            getViewOrThrow().showMainView();
         } else {
-            view.showPlaceholder();
+            getViewOrThrow().showPlaceholder();
         }
     }
 }

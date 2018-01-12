@@ -47,14 +47,14 @@ public class AddEditNotePresenter implements AddEditNoteContract.Presenter {
             }
         }
 
-        if (view != null) view.navigateToNotesScreen();
+        getViewOrThrow().navigateToNotesScreen();
     }
 
     @Override
     public void onDeleteNoteClicked() {
         if (noteBeingEdited != null) {
             noteRepository.deleteNoteById(noteBeingEdited.getId());
-            if (view != null) view.navigateToNotesScreen();
+            getViewOrThrow().navigateToNotesScreen();
         }
     }
 
@@ -65,11 +65,20 @@ public class AddEditNotePresenter implements AddEditNoteContract.Presenter {
 
     /********** Methods **********/
 
+    @NonNull
+    private AddEditNoteContract.View getViewOrThrow() {
+        if (view != null) {
+            return view;
+        } else {
+            throw new IllegalStateException("View not attached to presenter");
+        }
+    }
+
     private void setNoteDataToView() {
-        if (noteBeingEdited != null && view != null) {
-            view.showMenuActionDelete();
-            view.setTitle(noteBeingEdited.getTitle());
-            view.setDescription(noteBeingEdited.getDescription());
+        if (noteBeingEdited != null) {
+            getViewOrThrow().showMenuActionDelete();
+            getViewOrThrow().setTitle(noteBeingEdited.getTitle());
+            getViewOrThrow().setDescription(noteBeingEdited.getDescription());
         }
     }
 }
