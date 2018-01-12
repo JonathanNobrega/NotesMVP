@@ -41,8 +41,18 @@ class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHolder> {
     public void onBindViewHolder(NoteViewHolder holder, int position) {
         Note note = notes.get(position);
 
-        holder.textViewTitle.setText(note.getTitle());
-        holder.textViewDescription.setText(note.getDescription());
+        if (note.getTitle().isEmpty()) {
+            holder.textViewTitle.setVisibility(View.GONE);
+        } else {
+            holder.textViewTitle.setVisibility(View.VISIBLE);
+            holder.textViewTitle.setText(note.getTitle());
+        }
+        if (note.getDescription().isEmpty()) {
+            holder.textViewDescription.setVisibility(View.GONE);
+        } else {
+            holder.textViewDescription.setVisibility(View.VISIBLE);
+            holder.textViewDescription.setText(note.getDescription());
+        }
     }
 
     @Override
