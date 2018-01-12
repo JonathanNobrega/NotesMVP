@@ -42,4 +42,14 @@ public class LocalNoteDataSource implements NoteRepository {
             realm.commitTransaction();
         }
     }
+
+    @Override
+    public void deleteNote(@NonNull Note note) {
+        Realm.getDefaultInstance().executeTransaction(realm ->
+                realm.where(Note.class)
+                        .equalTo("id", note.getId())
+                        .findFirst()
+                        .deleteFromRealm()
+        );
+    }
 }

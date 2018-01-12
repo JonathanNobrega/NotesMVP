@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="pt_BR">
-    <string name="app_name">Notas</string>
-    <string name="note_title">Notas</string>
+
+    <!-- Application name -->
+    <string name="app_name">Notas MVP</string>
+
+    <!-- Notes -->
+    <string name="note_title">Notas MVP</string>
     <string name="note_placeholder_title">Nenhuma nota encontrada</string>
     <string name="note_placeholder_description">Toque no \'+\' para criar uma nova nota</string>
+
+    <!-- Add edit note -->
+    <string name="add_edit_note_title_hint">Título</string>
+    <string name="add_edit_note_description_hint">Nota</string>
+    <string name="add_edit_note_menu_action_save">Salvar</string>
+    <string name="add_edit_note_menu_action_delete">Apagar</string>
+
 </resources>

@@ -14,6 +14,7 @@ import java.util.List;
 import br.com.fatec.tg.mvp.notes.R;
 import br.com.fatec.tg.mvp.notes.data.entity.Note;
 import br.com.fatec.tg.mvp.notes.data.repository.datasource.LocalNoteDataSource;
+import br.com.fatec.tg.mvp.notes.ui.addeditnote.AddEditNoteActivity;
 import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -94,12 +95,12 @@ public class NotesActivity extends AppCompatActivity implements
 
     @Override
     public void navigateToAddNoteScreen() {
-        // TODO
+        startActivity(AddEditNoteActivity.getStartIntent(this));
     }
 
     @Override
     public void navigateToNoteDetailsScreen(@NonNull Note note) {
-        // TODO
+        startActivity(AddEditNoteActivity.getStartIntent(this, note.getId()));
     }
 
     /********** NotesAdapter.ItemListener **********/
@@ -118,7 +119,7 @@ public class NotesActivity extends AppCompatActivity implements
     private void setupRecyclerView() {
         StaggeredGridLayoutManager layoutManager =
                 new StaggeredGridLayoutManager(columnsNumber, StaggeredGridLayoutManager.VERTICAL);
-        mNoteAdapter = new NotesAdapter(new ArrayList<Note>(), this);
+        mNoteAdapter = new NotesAdapter(new ArrayList<>(), this);
         recyclerViewNotes.setLayoutManager(layoutManager);
         recyclerViewNotes.setAdapter(mNoteAdapter);
     }

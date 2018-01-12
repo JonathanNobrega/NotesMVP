@@ -3,6 +3,8 @@ apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 27
+    buildToolsVersion '27.0.3'
+
     defaultConfig {
         applicationId "br.com.fatec.tg.mvp.notes"
         minSdkVersion 21
@@ -11,18 +13,24 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
     final SUPPORT_LIBRARY_VERSION = '27.0.2'
 
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "com.android.support:appcompat-v7:$SUPPORT_LIBRARY_VERSION"
     implementation "com.android.support:design:$SUPPORT_LIBRARY_VERSION"
     implementation "com.android.support:recyclerview-v7:$SUPPORT_LIBRARY_VERSION"
