@@ -16,7 +16,7 @@ public interface NoteRepository {
 
     boolean hasAnyNotes();
 
-    void saveNote(@NonNull Note note);
+    void saveOrUpdateNote(@NonNull Note note);
 
-    void deleteNote(@NonNull Note note);
+    void deleteNoteById(@NonNull String noteId);
 }

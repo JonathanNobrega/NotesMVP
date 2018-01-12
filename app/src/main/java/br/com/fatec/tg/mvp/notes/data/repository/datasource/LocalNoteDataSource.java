@@ -13,18 +13,22 @@ public class LocalNoteDataSource implements NoteRepository {
     @NonNull
     @Override
     public List<Note> getAllNotes() {
-        return Realm.getDefaultInstance()
-                .where(Note.class)
-                .findAll();
+        Realm realm = Realm.getDefaultInstance();
+        return realm.copyFromRealm(
+                realm.where(Note.class)
+                        .findAll()
+        );
     }
 
     @NonNull
     @Override
     public Note getNoteById(@NonNull String id) {
-        return Realm.getDefaultInstance()
-                .where(Note.class)
-                .equalTo("id", id)
-                .findFirst();
+        Realm realm = Realm.getDefaultInstance();
+        return realm.copyFromRealm(
+                realm.where(Note.class)
+                        .equalTo("id", id)
+                        .findFirst()
+        );
     }
 
     @Override
@@ -35,7 +39,7 @@ public class LocalNoteDataSource implements NoteRepository {
     }
 
     @Override
-    public void saveNote(@NonNull Note note) {
+    public void saveOrUpdateNote(@NonNull Note note) {
         try (Realm realm = Realm.getDefaultInstance()) {
             realm.beginTransaction();
             realm.copyToRealmOrUpdate(note);
@@ -44,10 +48,10 @@ public class LocalNoteDataSource implements NoteRepository {
     }
 
     @Override
-    public void deleteNote(@NonNull Note note) {
+    public void deleteNoteById(@NonNull String noteId) {
         Realm.getDefaultInstance().executeTransaction(realm ->
                 realm.where(Note.class)
-                        .equalTo("id", note.getId())
+                        .equalTo("id", noteId)
                         .findFirst()
                         .deleteFromRealm()
         );

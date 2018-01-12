@@ -40,10 +40,10 @@ public class AddEditNotePresenter implements AddEditNoteContract.Presenter {
             if (noteBeingEdited != null) {
                 noteBeingEdited.setTitle(title);
                 noteBeingEdited.setDescription(description);
-                noteRepository.saveNote(noteBeingEdited);
+                noteRepository.saveOrUpdateNote(noteBeingEdited);
             } else {
                 Note note = new Note(Database.generateId(), title, description);
-                noteRepository.saveNote(note);
+                noteRepository.saveOrUpdateNote(note);
             }
         }
 
@@ -53,7 +53,7 @@ public class AddEditNotePresenter implements AddEditNoteContract.Presenter {
     @Override
     public void onDeleteNoteClicked() {
         if (noteBeingEdited != null) {
-            noteRepository.deleteNote(noteBeingEdited);
+            noteRepository.deleteNoteById(noteBeingEdited.getId());
             if (view != null) view.navigateToNotesScreen();
         }
     }
