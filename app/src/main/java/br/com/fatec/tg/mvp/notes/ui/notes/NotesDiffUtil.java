@@ -10,35 +10,35 @@ import br.com.fatec.tg.mvp.notes.data.entity.Note;
 public class NotesDiffUtil extends DiffUtil.Callback {
 
     @NonNull
-    private final List<Note> mOldNoteList;
+    private final List<Note> oldNotes;
     @NonNull
-    private final List<Note> mNewNoteList;
+    private final List<Note> newNotes;
 
-    NotesDiffUtil(@NonNull List<Note> oldNoteList,
-                  @NonNull List<Note> newNoteList) {
-        mOldNoteList = oldNoteList;
-        mNewNoteList = newNoteList;
+    NotesDiffUtil(@NonNull List<Note> oldNotes,
+                  @NonNull List<Note> newNotes) {
+        this.oldNotes = oldNotes;
+        this.newNotes = newNotes;
     }
 
     @Override
     public int getOldListSize() {
-        return mOldNoteList.size();
+        return oldNotes.size();
     }
 
     @Override
     public int getNewListSize() {
-        return mNewNoteList.size();
+        return newNotes.size();
     }
 
     @Override
     public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-        return mOldNoteList.get(oldItemPosition).getId().equals(
-                mNewNoteList.get(newItemPosition).getId());
+        return oldNotes.get(oldItemPosition).getId().equals(
+                newNotes.get(newItemPosition).getId());
     }
 
     @Override
     public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-        return mOldNoteList.get(oldItemPosition).equals(
-                mNewNoteList.get(newItemPosition));
+        return oldNotes.get(oldItemPosition).equals(
+                newNotes.get(newItemPosition));
     }
 }
