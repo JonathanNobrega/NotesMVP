@@ -34,18 +34,6 @@ public class NotesPresenter implements NotesContract.Presenter {
     }
 
     @Override
-    public void onNoteCreated(@NonNull Note note) {
-        getViewOrThrow().addNoteToList(note);
-        updatePlaceholderState();
-    }
-
-    @Override
-    public void onNoteDeleted(@NonNull Note note) {
-        getViewOrThrow().removeNoteFromList(note);
-        updatePlaceholderState();
-    }
-
-    @Override
     public void detachView() {
         view = null;
     }

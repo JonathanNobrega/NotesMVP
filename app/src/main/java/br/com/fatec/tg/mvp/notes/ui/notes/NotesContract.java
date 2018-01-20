@@ -17,10 +17,6 @@ public interface NotesContract {
 
         void showNotes(@NonNull List<Note> notes);
 
-        void addNoteToList(@NonNull Note note);
-
-        void removeNoteFromList(@NonNull Note note);
-
         void navigateToAddNoteScreen();
 
         void navigateToNoteDetailsScreen(@NonNull Note note);
@@ -31,9 +27,5 @@ public interface NotesContract {
         void onAddNoteClicked();
 
         void onNoteClicked(@NonNull Note note);
-
-        void onNoteCreated(@NonNull Note note);
-
-        void onNoteDeleted(@NonNull Note note);
     }
 }

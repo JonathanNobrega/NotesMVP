@@ -84,16 +84,6 @@ public class NotesActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void addNoteToList(@NonNull Note note) {
-        mNoteAdapter.addItem(note);
-    }
-
-    @Override
-    public void removeNoteFromList(@NonNull Note note) {
-        mNoteAdapter.removeItem(note);
-    }
-
-    @Override
     public void navigateToAddNoteScreen() {
         startActivity(AddEditNoteActivity.getStartIntent(this));
     }

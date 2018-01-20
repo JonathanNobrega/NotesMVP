@@ -16,7 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHolder> {
+public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHolder> {
 
     @NonNull
     private final List<Note> notes;
@@ -65,28 +65,6 @@ class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHolder> {
         this.notes.clear();
         this.notes.addAll(notes);
         diffResult.dispatchUpdatesTo(this);
-    }
-
-    @NonNull
-    List<Note> getData() {
-        return notes;
-    }
-
-    void addItem(@NonNull Note note) {
-        notes.add(0, note);
-        notifyItemInserted(0);
-    }
-
-    void removeItem(@NonNull Note note) {
-        int itemPosition = notes.indexOf(note);
-        notes.remove(note);
-        notifyItemRemoved(itemPosition);
-    }
-
-    void updateItem(@NonNull Note note) {
-        int itemPosition = notes.indexOf(note);
-        notes.set(itemPosition, note);
-        notifyItemChanged(itemPosition);
     }
 
     class NoteViewHolder extends RecyclerView.ViewHolder {
