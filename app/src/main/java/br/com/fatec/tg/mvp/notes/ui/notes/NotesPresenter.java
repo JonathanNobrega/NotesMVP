@@ -3,15 +3,17 @@ package br.com.fatec.tg.mvp.notes.ui.notes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.util.List;
+
 import br.com.fatec.tg.mvp.notes.data.entity.Note;
 import br.com.fatec.tg.mvp.notes.data.repository.NoteRepository;
 
 public class NotesPresenter implements NotesContract.Presenter {
 
-    @NonNull
-    private final NoteRepository noteRepository;
     @Nullable
     private NotesContract.View view;
+    @NonNull
+    private final NoteRepository noteRepository;
 
     NotesPresenter(@NonNull NoteRepository noteRepository) {
         this.noteRepository = noteRepository;
@@ -50,15 +52,16 @@ public class NotesPresenter implements NotesContract.Presenter {
     }
 
     private void loadNotes() {
-        getViewOrThrow().showNotes(noteRepository.getAllNotes());
-        updatePlaceholderState();
+        List<Note> notes = noteRepository.getAllNotes();
+        getViewOrThrow().showNotes(notes);
+        updatePlaceholderState(notes);
     }
 
-    private void updatePlaceholderState() {
-        if (noteRepository.hasAnyNotes()) {
-            getViewOrThrow().showMainView();
-        } else {
+    private void updatePlaceholderState(@NonNull List<Note> notes) {
+        if (notes.isEmpty()) {
             getViewOrThrow().showPlaceholder();
+        } else {
+            getViewOrThrow().showMainView();
         }
     }
 }
