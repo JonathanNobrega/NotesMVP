@@ -36,25 +36,24 @@ public class NotesPresenterTest {
     }
 
     @Test
-    public void attachView_loadAllNotes_showNotes() {
+    public void loadNotes_showsNotes() {
         when(noteRepository.getAllNotes()).thenReturn(NOTES);
-        presenter.attachView(view);
+        presenter.loadNotes();
         verify(noteRepository).getAllNotes();
-        verify(view).showNotes(any());
+        verify(view).showNotes(NOTES);
         verify(view).showMainView();
     }
 
     @Test
-    public void attachView_emptyNotes_showsPlaceholder() {
+    public void loadNotes_emptyResult_showsPlaceholder() {
         when(noteRepository.getAllNotes()).thenReturn(Collections.emptyList());
-        presenter.attachView(view);
+        presenter.loadNotes();
         verify(noteRepository).getAllNotes();
         verify(view).showPlaceholder();
     }
 
     @Test
     public void onAddNoteClicked_navigatesToAddNoteScreen() {
-        presenter.attachView(view);
         presenter.onAddNoteClicked();
         verify(view).navigateToAddNoteScreen();
     }
@@ -62,14 +61,7 @@ public class NotesPresenterTest {
     @Test
     public void onNoteClicked_navigatesToNoteDetailsScreen() {
         Note note = NOTES.get(0);
-        presenter.attachView(view);
         presenter.onNoteClicked(note);
         verify(view).navigateToNoteDetailsScreen(note);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void detachView_callsView_throwsException() {
-        presenter.detachView();
-        presenter.onAddNoteClicked();
     }
 }

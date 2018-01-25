@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import java.util.List;
 
 import br.com.fatec.tg.mvp.notes.data.entity.Note;
-import br.com.fatec.tg.mvp.notes.ui.common.BasePresenter;
 
 public interface NotesContract {
 
@@ -22,7 +21,9 @@ public interface NotesContract {
         void navigateToNoteDetailsScreen(@NonNull Note note);
     }
 
-    interface Presenter extends BasePresenter<View> {
+    interface Presenter {
+
+        void loadNotes();
 
         void onAddNoteClicked();
 

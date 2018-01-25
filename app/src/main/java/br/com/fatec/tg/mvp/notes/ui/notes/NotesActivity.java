@@ -48,13 +48,7 @@ public class NotesActivity extends AppCompatActivity implements
     @Override
     protected void onResume() {
         super.onResume();
-        presenter.attachView(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        presenter.detachView();
+        presenter.loadNotes();
     }
 
     /********** Click events **********/
@@ -103,7 +97,7 @@ public class NotesActivity extends AppCompatActivity implements
     /********** Methods **********/
 
     private void createPresenter() {
-        presenter = new NotesPresenter(new LocalNoteDataSource());
+        presenter = new NotesPresenter(new LocalNoteDataSource(), this);
     }
 
     private void setupRecyclerView() {
