@@ -6,7 +6,7 @@ import java.util.List;
 
 import br.com.fatec.tg.mvp.notes.data.entity.Note;
 
-public interface NoteRepository {
+public interface NotesRepository {
 
     @NonNull
     List<Note> getAllNotes();

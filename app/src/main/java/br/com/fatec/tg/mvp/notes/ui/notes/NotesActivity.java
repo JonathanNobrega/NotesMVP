@@ -13,7 +13,7 @@ import java.util.List;
 
 import br.com.fatec.tg.mvp.notes.R;
 import br.com.fatec.tg.mvp.notes.data.entity.Note;
-import br.com.fatec.tg.mvp.notes.data.repository.datasource.LocalNoteDataSource;
+import br.com.fatec.tg.mvp.notes.data.repository.datasource.LocalNotesDataSource;
 import br.com.fatec.tg.mvp.notes.ui.addeditnote.AddEditNoteActivity;
 import butterknife.BindInt;
 import butterknife.BindView;
@@ -34,7 +34,7 @@ public class NotesActivity extends AppCompatActivity implements
     int columnsNumber;
 
     private NotesContract.Presenter presenter;
-    private NotesAdapter mNoteAdapter;
+    private NotesAdapter notesAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,12 +74,12 @@ public class NotesActivity extends AppCompatActivity implements
 
     @Override
     public void showNotes(@NonNull List<Note> notes) {
-        mNoteAdapter.setData(notes);
+        notesAdapter.setData(notes);
     }
 
     @Override
     public void navigateToAddNoteScreen() {
-        startActivity(AddEditNoteActivity.getStartIntent(this));
+        startActivity(AddEditNoteActivity.getStartIntent(this, null));
     }
 
     @Override
@@ -97,14 +97,14 @@ public class NotesActivity extends AppCompatActivity implements
     /********** Methods **********/
 
     private void createPresenter() {
-        presenter = new NotesPresenter(new LocalNoteDataSource(), this);
+        presenter = new NotesPresenter(new LocalNotesDataSource(), this);
     }
 
     private void setupRecyclerView() {
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(
                 columnsNumber, StaggeredGridLayoutManager.VERTICAL);
-        mNoteAdapter = new NotesAdapter(new ArrayList<>(), this);
+        notesAdapter = new NotesAdapter(new ArrayList<>(), this);
         recyclerViewNotes.setLayoutManager(layoutManager);
-        recyclerViewNotes.setAdapter(mNoteAdapter);
+        recyclerViewNotes.setAdapter(notesAdapter);
     }
 }

@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import br.com.fatec.tg.mvp.notes.data.entity.Note;
-import br.com.fatec.tg.mvp.notes.data.repository.NoteRepository;
+import br.com.fatec.tg.mvp.notes.data.repository.NotesRepository;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -27,7 +27,7 @@ public class NotesPresenterTest {
     @InjectMocks
     private NotesPresenter presenter;
     @Mock
-    private NoteRepository noteRepository;
+    private NotesRepository notesRepository;
     @Mock
     private NotesContract.View view;
 
@@ -38,18 +38,18 @@ public class NotesPresenterTest {
 
     @Test
     public void loadNotes_showsNotes() {
-        when(noteRepository.getAllNotes()).thenReturn(NOTES);
+        when(notesRepository.getAllNotes()).thenReturn(NOTES);
         presenter.loadNotes();
-        verify(noteRepository).getAllNotes();
+        verify(notesRepository).getAllNotes();
         verify(view).showNotes(NOTES);
         verify(view).showMainView();
     }
 
     @Test
     public void loadNotes_emptyNotes_showsPlaceholder() {
-        when(noteRepository.getAllNotes()).thenReturn(EMPTY_NOTES);
+        when(notesRepository.getAllNotes()).thenReturn(EMPTY_NOTES);
         presenter.loadNotes();
-        verify(noteRepository).getAllNotes();
+        verify(notesRepository).getAllNotes();
         verify(view).showPlaceholder();
     }
 

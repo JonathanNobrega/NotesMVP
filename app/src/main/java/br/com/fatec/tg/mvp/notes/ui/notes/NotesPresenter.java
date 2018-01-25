@@ -5,23 +5,23 @@ import android.support.annotation.NonNull;
 import java.util.List;
 
 import br.com.fatec.tg.mvp.notes.data.entity.Note;
-import br.com.fatec.tg.mvp.notes.data.repository.NoteRepository;
+import br.com.fatec.tg.mvp.notes.data.repository.NotesRepository;
 
 public class NotesPresenter implements NotesContract.Presenter {
 
     @NonNull
-    private final NoteRepository noteRepository;
+    private final NotesRepository notesRepository;
     @NonNull
     private final NotesContract.View view;
 
-    NotesPresenter(@NonNull NoteRepository noteRepository, @NonNull NotesContract.View view) {
-        this.noteRepository = noteRepository;
+    NotesPresenter(@NonNull NotesRepository notesRepository, @NonNull NotesContract.View view) {
+        this.notesRepository = notesRepository;
         this.view = view;
     }
 
     @Override
     public void loadNotes() {
-        List<Note> notes = noteRepository.getAllNotes();
+        List<Note> notes = notesRepository.getAllNotes();
         view.showNotes(notes);
         updatePlaceholderState(notes);
     }

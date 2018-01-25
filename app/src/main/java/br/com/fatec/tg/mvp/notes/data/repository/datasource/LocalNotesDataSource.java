@@ -5,11 +5,11 @@ import android.support.annotation.NonNull;
 import java.util.List;
 
 import br.com.fatec.tg.mvp.notes.data.entity.Note;
-import br.com.fatec.tg.mvp.notes.data.repository.NoteRepository;
+import br.com.fatec.tg.mvp.notes.data.repository.NotesRepository;
 import br.com.fatec.tg.mvp.notes.util.Database;
 import io.realm.Realm;
 
-public class LocalNoteDataSource implements NoteRepository {
+public class LocalNotesDataSource implements NotesRepository {
 
     @NonNull
     @Override

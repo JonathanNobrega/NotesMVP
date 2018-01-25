@@ -12,7 +12,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import br.com.fatec.tg.mvp.notes.R;
-import br.com.fatec.tg.mvp.notes.data.repository.datasource.LocalNoteDataSource;
+import br.com.fatec.tg.mvp.notes.data.repository.datasource.LocalNotesDataSource;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -30,11 +30,6 @@ public class AddEditNoteActivity extends AppCompatActivity implements AddEditNot
     @Nullable
     private String noteId;
     private AddEditNoteContract.Presenter presenter;
-
-    @NonNull
-    public static Intent getStartIntent(@NonNull Context context) {
-        return new Intent(context, AddEditNoteActivity.class);
-    }
 
     @NonNull
     public static Intent getStartIntent(@NonNull Context context,
@@ -99,7 +94,7 @@ public class AddEditNoteActivity extends AppCompatActivity implements AddEditNot
     }
 
     private void createPresenter() {
-        presenter = new AddEditNotePresenter(new LocalNoteDataSource(), this);
+        presenter = new AddEditNotePresenter(new LocalNotesDataSource(), this);
         presenter.setupNoteData(noteId);
     }
 

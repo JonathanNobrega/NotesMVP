@@ -7,7 +7,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import br.com.fatec.tg.mvp.notes.data.entity.Note;
-import br.com.fatec.tg.mvp.notes.data.repository.NoteRepository;
+import br.com.fatec.tg.mvp.notes.data.repository.NotesRepository;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -20,7 +20,7 @@ public class AddEditNotePresenterTest {
     @InjectMocks
     private AddEditNotePresenter presenter;
     @Mock
-    private NoteRepository noteRepository;
+    private NotesRepository notesRepository;
     @Mock
     private AddEditNoteContract.View view;
 
@@ -31,9 +31,9 @@ public class AddEditNotePresenterTest {
 
     @Test
     public void setupNoteData_showsNoteDataAndMenu() {
-        when(noteRepository.getNoteById(any())).thenReturn(NOTE);
+        when(notesRepository.getNoteById(any())).thenReturn(NOTE);
         presenter.setupNoteData(NOTE.getId());
-        verify(noteRepository).getNoteById(NOTE.getId());
+        verify(notesRepository).getNoteById(NOTE.getId());
         verify(view).showMenuActionDelete();
         verify(view).showTitle(NOTE.getTitle());
         verify(view).showDescription(NOTE.getDescription());
@@ -54,14 +54,14 @@ public class AddEditNotePresenterTest {
     @Test
     public void saveNote_navigatesToNotesScreen() {
         presenter.saveNote(NOTE.getId(), NOTE.getTitle(), NOTE.getDescription());
-        verify(noteRepository).saveOrUpdateNote(any());
+        verify(notesRepository).saveOrUpdateNote(any());
         verify(view).navigateToNotesScreen();
     }
 
     @Test
     public void deleteNote_navigatesToNotesScreen() {
         presenter.onDeleteNoteClicked(NOTE.getId());
-        verify(noteRepository).deleteNoteById(NOTE.getId());
+        verify(notesRepository).deleteNoteById(NOTE.getId());
         verify(view).navigateToNotesScreen();
     }
 
