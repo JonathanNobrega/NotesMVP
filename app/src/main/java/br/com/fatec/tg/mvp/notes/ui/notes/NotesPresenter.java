@@ -12,7 +12,7 @@ public class NotesPresenter implements NotesContract.Presenter {
     @NonNull
     private final NoteRepository noteRepository;
     @NonNull
-    private NotesContract.View view;
+    private final NotesContract.View view;
 
     NotesPresenter(@NonNull NoteRepository noteRepository, @NonNull NotesContract.View view) {
         this.noteRepository = noteRepository;

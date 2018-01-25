@@ -6,20 +6,23 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import br.com.fatec.tg.mvp.notes.data.entity.Note;
 import br.com.fatec.tg.mvp.notes.data.repository.NoteRepository;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class NotesPresenterTest {
 
-    private static List<Note> NOTES;
+    private static List<Note> EMPTY_NOTES = new ArrayList<>();
+
+    private static List<Note> NOTES = Arrays.asList(
+            new Note("qz1r25fee2", "Title 1", "Some description"),
+            new Note("rzr6dfa3e6", "Title 2", "Another description"));
 
     @InjectMocks
     private NotesPresenter presenter;
@@ -31,8 +34,6 @@ public class NotesPresenterTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        NOTES = Arrays.asList(new Note("qz1r25fee2", "Title 1", "Some description"),
-                new Note("rzr6dfa3e6", "Title 2", "Another description"));
     }
 
     @Test
@@ -45,8 +46,8 @@ public class NotesPresenterTest {
     }
 
     @Test
-    public void loadNotes_emptyResult_showsPlaceholder() {
-        when(noteRepository.getAllNotes()).thenReturn(Collections.emptyList());
+    public void loadNotes_emptyNotes_showsPlaceholder() {
+        when(noteRepository.getAllNotes()).thenReturn(EMPTY_NOTES);
         presenter.loadNotes();
         verify(noteRepository).getAllNotes();
         verify(view).showPlaceholder();
