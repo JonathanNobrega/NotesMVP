@@ -55,18 +55,12 @@ public class AddEditNoteActivity extends AppCompatActivity implements AddEditNot
     @Override
     protected void onStart() {
         super.onStart();
-        presenter.attachView(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        presenter.detachView();
+        presenter.setupNoteData();
     }
 
     @Override
     public void onBackPressed() {
-        presenter.onBackClicked(editTextNoteTitle.getText().toString(),
+        presenter.saveNote(editTextNoteTitle.getText().toString(),
                 editTextNoteDescription.getText().toString());
     }
 
@@ -80,12 +74,19 @@ public class AddEditNoteActivity extends AppCompatActivity implements AddEditNot
     }
 
     @Override
-    public void setTitle(@NonNull String title) {
+    public void hideMenuActionDelete() {
+        MenuItem menuActionDelete = toolbar.getMenu().findItem(R.id.add_edit_note_action_delete);
+        menuActionDelete.setEnabled(false);
+        menuActionDelete.setVisible(false);
+    }
+
+    @Override
+    public void showTitle(@NonNull String title) {
         editTextNoteTitle.setText(title);
     }
 
     @Override
-    public void setDescription(@NonNull String description) {
+    public void showDescription(@NonNull String description) {
         editTextNoteDescription.setText(description);
     }
 
@@ -97,11 +98,11 @@ public class AddEditNoteActivity extends AppCompatActivity implements AddEditNot
     /********** Methods **********/
 
     private void createPresenter(@Nullable String noteId) {
-        presenter = new AddEditNotePresenter(new LocalNoteDataSource(), noteId);
+        presenter = new AddEditNotePresenter(new LocalNoteDataSource(), this, noteId);
     }
 
     private void setupToolbar() {
-        toolbar.setNavigationOnClickListener(view -> presenter.onBackClicked(
+        toolbar.setNavigationOnClickListener(view -> presenter.saveNote(
                 editTextNoteTitle.getText().toString(),
                 editTextNoteDescription.getText().toString()));
         toolbar.inflateMenu(R.menu.activity_add_edit_note);

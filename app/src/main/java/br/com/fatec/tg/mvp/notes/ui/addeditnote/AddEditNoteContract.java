@@ -2,24 +2,26 @@ package br.com.fatec.tg.mvp.notes.ui.addeditnote;
 
 import android.support.annotation.NonNull;
 
-import br.com.fatec.tg.mvp.notes.ui.common.BasePresenter;
-
 public interface AddEditNoteContract {
 
     interface View {
 
         void showMenuActionDelete();
 
-        void setTitle(@NonNull String title);
+        void hideMenuActionDelete();
 
-        void setDescription(@NonNull String description);
+        void showTitle(@NonNull String title);
+
+        void showDescription(@NonNull String description);
 
         void navigateToNotesScreen();
     }
 
-    interface Presenter extends BasePresenter<View> {
+    interface Presenter {
 
-        void onBackClicked(@NonNull String title, @NonNull String description);
+        void setupNoteData();
+
+        void saveNote(@NonNull String title, @NonNull String description);
 
         void onDeleteNoteClicked();
     }

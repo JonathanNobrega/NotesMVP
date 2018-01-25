@@ -5,80 +5,55 @@ import android.support.annotation.Nullable;
 
 import br.com.fatec.tg.mvp.notes.data.entity.Note;
 import br.com.fatec.tg.mvp.notes.data.repository.NoteRepository;
-import br.com.fatec.tg.mvp.notes.util.Database;
 
 public class AddEditNotePresenter implements AddEditNoteContract.Presenter {
 
     @NonNull
     private final NoteRepository noteRepository;
+    @NonNull
+    private final AddEditNoteContract.View view;
     @Nullable
-    private final Note noteBeingEdited;
-    @Nullable
-    private AddEditNoteContract.View view;
+    private final String noteId;
 
-    AddEditNotePresenter(@NonNull NoteRepository noteRepository, @Nullable String noteId) {
+    AddEditNotePresenter(@NonNull NoteRepository noteRepository,
+                         @NonNull AddEditNoteContract.View view,
+                         @Nullable String noteId) {
         this.noteRepository = noteRepository;
-
-        if (noteId != null) {
-            noteBeingEdited = noteRepository.getNoteById(noteId);
-        } else {
-            noteBeingEdited = null;
-        }
+        this.view = view;
+        this.noteId = noteId;
     }
 
     /********** AddEditNoteContract.Presenter **********/
 
     @Override
-    public void attachView(@NonNull AddEditNoteContract.View view) {
-        this.view = view;
-        setNoteDataToView();
+    public void setupNoteData() {
+        if (noteId != null) {
+            Note note = noteRepository.getNoteById(noteId);
+            view.showMenuActionDelete();
+            view.showTitle(note.getTitle());
+            view.showDescription(note.getDescription());
+        } else {
+            view.hideMenuActionDelete();
+        }
     }
 
     @Override
-    public void onBackClicked(@NonNull String title, @NonNull String description) {
+    public void saveNote(@NonNull String title, @NonNull String description) {
         if (!title.isEmpty() || !description.isEmpty()) {
-            if (noteBeingEdited != null) {
-                noteBeingEdited.setTitle(title);
-                noteBeingEdited.setDescription(description);
-                noteRepository.saveOrUpdateNote(noteBeingEdited);
-            } else {
-                Note note = new Note(Database.generateId(), title, description);
-                noteRepository.saveOrUpdateNote(note);
-            }
+            Note note = new Note(noteId == null ? "" : noteId, title, description);
+            noteRepository.saveOrUpdateNote(note);
         }
 
-        getViewOrThrow().navigateToNotesScreen();
+        view.navigateToNotesScreen();
     }
 
     @Override
     public void onDeleteNoteClicked() {
-        if (noteBeingEdited != null) {
-            noteRepository.deleteNoteById(noteBeingEdited.getId());
-            getViewOrThrow().navigateToNotesScreen();
-        }
-    }
-
-    @Override
-    public void detachView() {
-        view = null;
-    }
-
-    /********** Methods **********/
-
-    @NonNull
-    private AddEditNoteContract.View getViewOrThrow() {
-        if (view != null) {
-            return view;
+        if (noteId != null) {
+            noteRepository.deleteNoteById(noteId);
+            view.navigateToNotesScreen();
         } else {
-            throw new IllegalStateException("View not attached to presenter");
-        }
-    }
-
-    private void setNoteDataToView() {
-        if (noteBeingEdited != null) {
-            getViewOrThrow().showMenuActionDelete();
-            getViewOrThrow().setTitle(noteBeingEdited.getTitle());
-            getViewOrThrow().setDescription(noteBeingEdited.getDescription());
+            throw new IllegalStateException("Cannot delete a null note");
         }
     }
 }

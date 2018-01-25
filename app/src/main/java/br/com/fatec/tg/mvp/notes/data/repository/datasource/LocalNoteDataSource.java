@@ -6,6 +6,7 @@ import java.util.List;
 
 import br.com.fatec.tg.mvp.notes.data.entity.Note;
 import br.com.fatec.tg.mvp.notes.data.repository.NoteRepository;
+import br.com.fatec.tg.mvp.notes.util.Database;
 import io.realm.Realm;
 
 public class LocalNoteDataSource implements NoteRepository {
@@ -35,6 +36,7 @@ public class LocalNoteDataSource implements NoteRepository {
     public void saveOrUpdateNote(@NonNull Note note) {
         try (Realm realm = Realm.getDefaultInstance()) {
             realm.beginTransaction();
+            if (note.getId().isEmpty()) note.setId(Database.generateId());
             realm.copyToRealmOrUpdate(note);
             realm.commitTransaction();
         }
