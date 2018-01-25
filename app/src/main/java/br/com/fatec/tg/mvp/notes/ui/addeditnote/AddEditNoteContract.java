@@ -1,6 +1,7 @@
 package br.com.fatec.tg.mvp.notes.ui.addeditnote;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 public interface AddEditNoteContract {
 
@@ -19,10 +20,10 @@ public interface AddEditNoteContract {
 
     interface Presenter {
 
-        void setupNoteData();
+        void setupNoteData(@Nullable String noteId);
 
-        void saveNote(@NonNull String title, @NonNull String description);
+        void saveNote(@Nullable String noteId, @NonNull String title, @NonNull String description);
 
-        void onDeleteNoteClicked();
+        void onDeleteNoteClicked(@Nullable String noteId);
     }
 }

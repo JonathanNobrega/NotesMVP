@@ -27,6 +27,8 @@ public class AddEditNoteActivity extends AppCompatActivity implements AddEditNot
     @BindView(R.id.edit_text_note_description)
     EditText editTextNoteDescription;
 
+    @Nullable
+    private String noteId;
     private AddEditNoteContract.Presenter presenter;
 
     @NonNull
@@ -48,19 +50,14 @@ public class AddEditNoteActivity extends AppCompatActivity implements AddEditNot
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_edit_note);
         ButterKnife.bind(this);
-        createPresenter(getIntent().getStringExtra(EXTRA_NOTE_ID));
+        retrieveNoteId();
         setupToolbar();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        presenter.setupNoteData();
+        createPresenter();
     }
 
     @Override
     public void onBackPressed() {
-        presenter.saveNote(editTextNoteTitle.getText().toString(),
+        presenter.saveNote(noteId, editTextNoteTitle.getText().toString(),
                 editTextNoteDescription.getText().toString());
     }
 
@@ -97,18 +94,24 @@ public class AddEditNoteActivity extends AppCompatActivity implements AddEditNot
 
     /********** Methods **********/
 
-    private void createPresenter(@Nullable String noteId) {
-        presenter = new AddEditNotePresenter(new LocalNoteDataSource(), this, noteId);
+    private void retrieveNoteId() {
+        noteId = getIntent().getStringExtra(EXTRA_NOTE_ID);
+    }
+
+    private void createPresenter() {
+        presenter = new AddEditNotePresenter(new LocalNoteDataSource(), this);
+        presenter.setupNoteData(noteId);
     }
 
     private void setupToolbar() {
         toolbar.setNavigationOnClickListener(view -> presenter.saveNote(
+                noteId,
                 editTextNoteTitle.getText().toString(),
                 editTextNoteDescription.getText().toString()));
         toolbar.inflateMenu(R.menu.activity_add_edit_note);
         toolbar.setOnMenuItemClickListener(menuItem -> {
             if (menuItem.getItemId() == R.id.add_edit_note_action_delete) {
-                presenter.onDeleteNoteClicked();
+                presenter.onDeleteNoteClicked(noteId);
             }
             return false;
         });

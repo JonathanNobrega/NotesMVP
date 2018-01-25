@@ -12,21 +12,17 @@ public class AddEditNotePresenter implements AddEditNoteContract.Presenter {
     private final NoteRepository noteRepository;
     @NonNull
     private final AddEditNoteContract.View view;
-    @Nullable
-    private final String noteId;
 
     AddEditNotePresenter(@NonNull NoteRepository noteRepository,
-                         @NonNull AddEditNoteContract.View view,
-                         @Nullable String noteId) {
+                         @NonNull AddEditNoteContract.View view) {
         this.noteRepository = noteRepository;
         this.view = view;
-        this.noteId = noteId;
     }
 
     /********** AddEditNoteContract.Presenter **********/
 
     @Override
-    public void setupNoteData() {
+    public void setupNoteData(@Nullable String noteId) {
         if (noteId != null) {
             Note note = noteRepository.getNoteById(noteId);
             view.showMenuActionDelete();
@@ -38,7 +34,7 @@ public class AddEditNotePresenter implements AddEditNoteContract.Presenter {
     }
 
     @Override
-    public void saveNote(@NonNull String title, @NonNull String description) {
+    public void saveNote(@Nullable String noteId, @NonNull String title, @NonNull String description) {
         if (!title.isEmpty() || !description.isEmpty()) {
             Note note = new Note(noteId == null ? "" : noteId, title, description);
             noteRepository.saveOrUpdateNote(note);
@@ -48,7 +44,7 @@ public class AddEditNotePresenter implements AddEditNoteContract.Presenter {
     }
 
     @Override
-    public void onDeleteNoteClicked() {
+    public void onDeleteNoteClicked(@Nullable String noteId) {
         if (noteId != null) {
             noteRepository.deleteNoteById(noteId);
             view.navigateToNotesScreen();
