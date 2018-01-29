@@ -19,6 +19,8 @@ public class NotesPresenter implements NotesContract.Presenter {
         this.view = view;
     }
 
+    /********** NotesContract.Presenter **********/
+
     @Override
     public void loadNotes() {
         List<Note> notes = notesRepository.getAllNotes();

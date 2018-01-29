@@ -18,9 +18,9 @@ import static org.mockito.Mockito.when;
 
 public class NotesPresenterTest {
 
-    private static List<Note> EMPTY_NOTES = new ArrayList<>();
+    private static final List<Note> EMPTY_NOTES = new ArrayList<>();
 
-    private static List<Note> NOTES = Arrays.asList(
+    private static final List<Note> NOTES = Arrays.asList(
             new Note("qz1r25fee2", "Title 1", "Some description"),
             new Note("rzr6dfa3e6", "Title 2", "Another description"));
 

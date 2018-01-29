@@ -15,7 +15,7 @@ import static org.mockito.Mockito.when;
 
 public class AddEditNotePresenterTest {
 
-    private static Note NOTE = new Note("qz1r25fee2", "Title 1", "Some description");
+    private static final Note NOTE = new Note("qz1r25fee2", "Title 1", "Some description");
 
     @InjectMocks
     private AddEditNotePresenter presenter;
